@@ -1,6 +1,6 @@
-# Aldin_Berisa_Web_2019_SPRING
+# GranApp
 
-GranApp
+
 
 Description: This system will provide the user ability to see where it is the cheapest to buy a desired product among several vendors.
 User will be able to enter the desired product and get the cheapest price for it and which vendor is selling it.
@@ -17,3 +17,5 @@ Products-contains information about the products
 Vendors-contains information about the vendors
 Discounts(coupons)-contains information coupons if are some available
 Logs-contains information about all the changes in the system, used by admin.
+
+This project is made using php flight witch uses similar rounting system as in angular, s
