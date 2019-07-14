@@ -1,0 +1,76 @@
+<div class="card">
+    <div class="header">
+        <h4 class="title">Records table</h4>
+        <p class="category">Here are listed all the records</p>
+    </div>
+      <div class="content table-responsive table-full-width">
+        <table id="records" class="table table-hover table-striped">
+            <thead>
+              <th>Record</th>
+              <th>Delete record</th>
+            </thead>
+            <tbody id="recordsBody">
+              <td style="text-align: center" colspan="2"><img style="width: 50px; height: auto" src="assets/img/loader.gif"></td>
+            </tbody>
+        </table>
+
+      </div>
+</div>
+
+<script type="text/javascript">
+
+getRecords();
+
+function getRecords(){
+  $.ajax({
+          url: 'granApp.api/records/',
+          type: 'GET',
+          dataType: 'json',
+          headers: {
+              'Bearer-Jwt': localStorage.getItem('userToken')
+          },
+          contentType: 'application/json; charset=utf-8',
+          success: function (data) {
+            var html = '';
+            for(var i = 0; i < data.length; i++){
+              html += '<tr><td>' + data[i].record_string + '</td>';
+              html += '<td><button type="button" class="btn btn-primary" onclick="deleteRecord(' + data[i].record_id + ')">Delete</button></td></tr>';
+            }
+            $("#recordsBody").html(html);
+            $('#records').DataTable();
+          },
+          error: function (error) {
+            if (error.status == 403){
+              window.location="login.html";
+            }else{
+              toastr.error(error.responseJSON.msg);
+            }
+          }
+      });
+    }
+
+      function deleteRecord(id){
+        if(confirm('Do you want to delete this record?')){
+        $.ajax({
+          method: "DELETE",
+          url: 'granApp.api/record/' + id,
+          headers: {
+              'Bearer-Jwt': localStorage.getItem('userToken')
+          },
+          success: function() {
+            getRecords();
+              toastr.success('Successfully deleted record');
+
+          },
+          error: function (error) {
+            if (error.status == 403){
+              window.location="login.html";
+            }else{
+              toastr.error(error.responseJSON.msg);
+            }
+          }
+      });
+    }
+}
+
+</script>

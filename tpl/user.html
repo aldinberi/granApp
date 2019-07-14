@@ -1,0 +1,311 @@
+<div class="col-md-8">
+    <div class="card">
+        <div class="header">
+            <h4 class="title">Edit Profile</h4>
+        </div>
+        <div class="content">
+            <form id = "userForm">
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label>First Name</label>
+                          <input id = "name" name = "name" type="text" class="form-control" placeholder="Company">
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label>Last Name</label>
+                          <input id = "lastname" name = "lastname" type="text" class="form-control" placeholder="Last Name">
+                      </div>
+                  </div>
+              </div>
+                <div class="row">
+                  <div id="email_input" class="col-md-4">
+                      <div class="form-group">
+                          <label>Email address</label>
+                          <input id = "email" name = "email" type="email" class="form-control" placeholder="Email">
+                      </div>
+                  </div>
+                    <div id="address_input" class="col-md-4">
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input id = "address" name = "address" type="text" class="form-control" placeholder="Address">
+                        </div>
+                    </div>
+                    <div id="company_input" class="col-md-4">
+                        <div  class="form-group">
+                            <label>Company</label>
+                            <input id = "company" name = "company" type="text" class="form-control" placeholder="Company">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
+                <button type="button" class="btn btn-info btn-fill" data-toggle="modal" data-target="#changePasswordModal">Change password</button>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Change password modal-->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="productModalLable" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changePasswordModalLable" >Change password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="change-password-form" action="" method="" novalidate="">
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label>New passwrod</label>
+            <input id="new_password" name="new_password" type="password" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label>Confirm password</label>
+            <input id="confirm_password" name="confirm_password" type="password" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id ="modalButton" type="submit" class="btn btn-primary">Change Password</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#change-password-form").validate({
+        rules: {
+          new_password: {
+            required : true,
+            minlength: 4,
+            maxlength: 10
+          },
+
+          confirm_password: {
+            required : true,
+            equalTo: "#new_password"
+          }
+        },
+
+        messages: {
+          new_password: {
+            minlength: "The password must be longer than 4",
+            maxlength: "The password must be shorter than 10"
+          },
+
+          confirm_password: {
+            equalTo: "Enter Confirm Password Same as Password"
+          }
+
+        },
+
+        submitHandler: function(form){
+          $.ajax({
+            url: 'granApp.api/password/' + user.user_id,
+            type: 'PUT',
+            headers: {
+                'Bearer-Jwt': localStorage.getItem('userToken')
+            },
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(objectifyForm($('#change-password-form'))),
+            success: function (jqXHR) {
+                  toastr.success('Successfully updated password');
+                  $('#change-password-form').modal('toggle');
+                },
+                error: function (error) {
+                  if (error.status == 403){
+                    window.location="login.html";
+                  }else{
+                    toastr.error(error.responseJSON.msg);
+                  }
+                }
+          });
+        }
+    });
+
+
+    $("#userForm").validate({
+        rules: {
+          name: {
+            required : true,
+            minlength: 3,
+            maxlength: 15
+          },
+
+          lastname: {
+            required : true,
+            minlength: 3,
+            maxlength: 15
+          },
+
+          email: {
+            required : true
+          },
+
+          company: {
+            required : true,
+            minlength: 2,
+            maxlength: 10
+          },
+
+          address: {
+            required : true,
+            minlength: 3,
+            maxlength: 10
+          }
+        },
+
+        messages: {
+          name: {
+            minlength: "Your name must be at least 3 characters long",
+            maxlength: "Your name must be less than 15 characters long"
+          },
+
+          lastname: {
+            minlength: "Your lastname must be at least 3 characters long",
+            maxlength: "Your lastname must be less than 15 characters long"
+          },
+
+          company: {
+            minlength: "Your company name must be at least 2 characters long",
+            maxlength: "Your company name must be less than 15 characters long"
+          },
+
+          address: {
+            minlength: "Your address must be at least 3 characters long",
+            maxlength: "Your address must be less than 15 characters long"
+          }
+
+        },
+
+        submitHandler: function(form){
+          if(user.user_type_id == 3){
+            $.ajax({
+              url: 'granApp.api/vendors/' + user.user_id,
+              type: 'PUT',
+              headers: {
+                  'Bearer-Jwt': localStorage.getItem('userToken')
+              },
+              contentType: 'application/json; charset=utf-8',
+              data: JSON.stringify(objectifyForm($('#userForm'))),
+              success: function (jqXHR) {
+                    toastr.success('Successfully updated info');
+                  },
+                  error: function (error) {
+                    if (error.status == 403){
+                      window.location="login.html";
+                    }else{
+                      toastr.error(error.responseJSON.msg);
+                    }
+                  }
+            });
+          }else if ((user.user_type_id == 1) || (user.user_type_id == 2)){
+            $.ajax({
+              url: 'granApp.api/user/' + user.user_id,
+              type: 'PUT',
+              headers: {
+                  'Bearer-Jwt': localStorage.getItem('userToken')
+              },
+              contentType: 'application/json; charset=utf-8',
+              data: JSON.stringify(objectifyForm($('#userForm'))),
+              success: function (jqXHR) {
+                    toastr.success('Successfully updated info');
+                  },
+                  error: function (error) {
+                    if (error.status == 403){
+                      window.location="login.html";
+                    }else{
+                      toastr.error(error.responseJSON.msg);
+                    }
+                  }
+            });
+          }
+        }
+    });
+
+  });
+
+  var user = parseJwt(localStorage.getItem('userToken'))
+
+  if(user.user_type_id == 3){
+  $.ajax({
+          url: 'granApp.api/vendors/' + user.user_id,
+          type: 'GET',
+          dataType: 'json',
+          headers: {
+              'Bearer-Jwt': localStorage.getItem('userToken')
+          },
+          contentType: 'application/json; charset=utf-8',
+          success: function (data) {
+            var objData = data;
+            for(var i = 0; i < objData.length; i++){
+              $('#name').attr('value', objData[i].name);
+              $('#lastname').attr('value', objData[i].lastname);
+              $('#email').attr('value', objData[i].email);
+              $('#company').attr('value', objData[i].company);
+              $('#address').attr('value', objData[i].address);
+
+            }
+          },
+          error: function (error) {
+            if (error.status == 403){
+              window.location="login.html";
+            }else{
+              toastr.error(error.responseJSON.msg);
+            }
+          }
+      });
+
+  }else if ((user.user_type_id == 1) || (user.user_type_id == 2)){
+    $('#company_input').hide();
+    $('#address_input').attr('class', 'col-md-6');
+    $('#email_input').attr('class', 'col-md-6');
+    $.ajax({
+            url: 'granApp.api/user/' + user.user_id,
+            type: 'GET',
+            dataType: 'json',
+            headers: {
+                'Bearer-Jwt': localStorage.getItem('userToken')
+            },
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+              var objData = data;
+              for(var i = 0; i < objData.length; i++){
+                $('#name').attr('value', objData[i].name);
+                $('#lastname').attr('value', objData[i].lastname);
+                $('#email').attr('value', objData[i].email);
+                $('#address').attr('value', objData[i].address);
+              }
+            },
+            error: function (error) {
+              if (error.status == 403){
+                window.location="login.html";
+              }else{
+                toastr.error(error.responseJSON.msg);
+              }
+            }
+        });
+}
+
+
+  function objectifyForm(form) {
+      var fields = {};
+
+      form.find('input, textarea, select').each(function () {
+          fields[this.name] = $(this).val();
+      });
+
+      return fields;
+  }
+
+
+
+</script>

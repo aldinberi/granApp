@@ -1,0 +1,54 @@
+<div class="card">
+    <div class="header">
+        <h4 class="title">Products</h4>
+        <p class="category">Here are listed all the products with the lower price and which company is selling it</p>
+    </div>
+      <div class="content table-responsive table-full-width">
+        <table id="products" class="table table-hover table-striped">
+            <thead>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Date added</th>
+              <th>Company</th>
+            </thead>
+            <tbody id="productsBody">
+              <td style="text-align: center" colspan="5"><img style="width: 50px; height: auto" src="assets/img/loader.gif"></td>
+            </tbody>
+        </table>
+
+      </div>
+</div>
+</div>
+
+<script type="text/javascript">
+      $.ajax({
+              url: 'granApp.api/productlowprices/',
+              type: 'GET',
+              dataType: 'json',
+              headers: {
+                  'Bearer-Jwt': localStorage.getItem('userToken')
+              },
+              contentType: 'application/json; charset=utf-8',
+              success: function (data) {
+                var objData = data;
+                var html = '';
+                for(var i = 0; i < objData.length; i++){
+                  html += '<tr><td>' + objData[i].name + '</td>';
+                  html += '<td>' + objData[i].grammage + " " + objData[i].unit + '</td>';
+                  html += '<td>' + objData[i].lowest_price + '</td>';
+                  html += '<td>' + objData[i].date_added + '</td>';
+                  html += '<td>' + objData[i].company + '</td></tr>';
+                }
+                $("#productsBody").html(html);
+                $('#products').DataTable();
+              },
+              error: function (error) {
+                if (error.status == 403){
+                  window.location="login.html";
+                }else{
+                  toastr.error(error.responseJSON.msg);
+                }
+              }
+          });
+</script>

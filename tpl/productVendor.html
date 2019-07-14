@@ -1,0 +1,322 @@
+<div class="card">
+    <div class="header">
+        <h4 class="title">Product table</h4>
+        <p class="category">Here are listed all the products that you have added</p>
+    </div>
+      <div class="content table-responsive table-full-width">
+        <table id="products" class="table table-hover table-striped">
+            <thead>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Date added</th>
+              <th>Edit product</th>
+              <th>Delete product</th>
+
+            </thead>
+            <tbody id="productsBody">
+              <tr>
+                <td style="text-align: center" colspan="6"><img style="width: 50px; height: auto" src="assets/img/loader.gif"></td>
+              </tr>
+            </tbody>
+        </table>
+
+      </div>
+</div>
+</div>
+
+
+
+<!-- Adding/Editing Button trigger modal -->
+<button id ="mainButton" type="button" class="btn btn-info btn-fill pull-left" onclick="add_product()">Add product</button>
+
+<!-- Adding/Editing Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLable" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="productModalLable" >New Product</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form id="add-product-form">
+    <div class="modal-body">
+      <input id="id" name="id" type="hidden">
+
+      <div class="form-group">
+        <label>Name</label>
+        <input id="name" name="name" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Quantity</label>
+        <input id="grammage" name="grammage" type="number" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Unit</label>
+        <select id = "unit" name="unit" class="form-control">
+            <option value="g">g</option>
+            <option value="kg">kg</option>
+            <option value="l">l</option>
+            <option value="ml">ml</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Price</label>
+        <input id="price" name="price" type="number" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Date Added</label>
+        <input id="date_added" name="date_added" type="date" class="form-control">
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button id ="modalButton" type="submit" class="btn btn-primary">Add product</button>
+    </div>
+  </form>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+  var user = parseJwt(localStorage.getItem('userToken'))
+
+  $(document).ready(function(){
+    $("#add-product-form").validate({
+        rules: {
+          name: {
+            required : true,
+            minlength: 3,
+            maxlength: 20
+          },
+
+          grammage: {
+            required : true,
+            min: 0.1
+          },
+
+          price: {
+            required : true,
+            min: 0.1
+          },
+
+          unit:{
+            required : true
+          },
+
+          date_added: {
+            required: true,
+            date: true
+          }
+        },
+
+        messages: {
+          name: {
+            minlength: "The product must be at least 3 characters long",
+            maxlength: "The cupon must be less than 20 characters long"
+          },
+
+          grammage: {
+            min: "The quantity can not be 0 or less"
+          },
+
+          price: {
+            min: "The price can not be 0 or less"
+          },
+        },
+
+        submitHandler: function(form){
+          var id = $('#add-product-form input[name="id"]').val();
+          if (id == ""){
+            addNewProduct()
+          }else{
+            updateProduct(id)
+          }
+        }
+    });
+
+  });
+
+    getProducts();
+
+
+    function updateProduct(id){
+
+      $.ajax({
+        url: 'granApp.api/product/' + user.user_id + '/' + id,
+        type: 'PUT',
+        headers: {
+            'Bearer-Jwt': localStorage.getItem('userToken')
+        },
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(objectifyForm($('#add-product-form'))),
+        success: function (jqXHR) {
+              toastr.success('Successfully updated product');
+              getProducts();
+              $('#productModal').modal('toggle');
+            },
+            error: function (error) {
+              if (error.status == 403){
+                window.location="login.html";
+              }else{
+                toastr.error(error.responseJSON.msg);
+              }
+            }
+      });
+    }
+
+
+    function edit_product(id){
+        $.ajax({
+                url: 'granApp.api/vendorProducts/' + user.user_id + '/' + id,
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    'Bearer-Jwt': localStorage.getItem('userToken')
+                },
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                  var objData = data;
+
+                  for(var i = 0; i < objData.length; i++){
+                    $('#id').val(objData[i].id);
+                    $('#name').val(objData[i].name);
+
+                    $('#grammage').val(objData[i].grammage);
+                    $('#unit').val(objData[i].unit);
+                    $('#price').val(objData[i].price);
+                    $('#date_added').val(objData[i].date_added);
+                  }
+                    $('#modalButton').html('Update');
+                    $('#productModalLable').html('Edit product');
+                    $('#productModal').modal('toggle');
+
+                },
+                error: function (error) {
+                  if (error.status == 403){
+                    window.location="login.html";
+                  }else{
+                    toastr.error(error.responseJSON.msg);
+                }
+            }
+      });
+}
+
+function add_product(){
+                $('#id').val('');
+                $('#grammage').val('');
+                $('#name').val('');
+
+                $('#price').val('');
+                $('#date_added').val('');
+
+                $('#modalButton').html('Add product');
+                $('#productModalLable').html('New product');
+
+                $('#productModal').modal('toggle');
+}
+
+    function deleteProduct(id){
+      if(confirm('Do you want to delete this product?')){
+      $.ajax({
+        method: "DELETE",
+        url: 'granApp.api/product/' + id,
+        headers: {
+            'Bearer-Jwt': localStorage.getItem('userToken')
+        },
+        success: function() {
+            getProducts();
+            toastr.success('Successfully deleted product');
+
+        },
+        error: function (error) {
+          if (error.status == 403){
+            window.location="login.html";
+          }else{
+            toastr.error(error.responseJSON.msg);
+          }
+        }
+    });
+
+    }
+  }
+
+
+
+
+    function addNewProduct(){
+
+      $.ajax({
+        url: 'granApp.api/product/' + user.user_id,
+        type: 'POST',
+        headers: {
+            'Bearer-Jwt': localStorage.getItem('userToken')
+        },
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(objectifyForm($('#add-product-form'))),
+        success: function (jqXHR) {
+              toastr.success('Successfully added product');
+              getProducts();
+              $('#productModal').modal('toggle');
+            },
+            error: function (error) {
+              if (error.status == 403){
+                window.location="login.html";
+              }else{
+                toastr.error(error.responseJSON.msg);
+              }
+            }
+      });
+    }
+
+
+
+
+    function getProducts(){
+
+      $.ajax({
+              url: 'granApp.api/vendorProducts/' + user.user_id,
+              type: 'GET',
+              dataType: 'json',
+              headers: {
+                  'Bearer-Jwt': localStorage.getItem('userToken')
+              },
+              contentType: 'application/json; charset=utf-8',
+              success: function (data) {
+                var objData = data;
+                var html = '';
+                for(var i = 0; i < objData.length; i++){
+                  html += '<tr><td>' + objData[i].name + '</td>';
+                  html += '<td>' + objData[i].grammage + " " + objData[i].unit + '</td>';
+                  html += '<td>' + objData[i].price + '</td>';
+                  html += '<td>' + objData[i].date_added + '</td>';
+                  html += '<td><button type="button" class="btn btn-info btn-fill" onclick="edit_product(' + objData[i].id + ')">Edit</button></td>';
+                  html += '<td><button type="button" class="btn btn-primary" onclick="deleteProduct(' + objData[i].id + ')">Delete</button></td></tr>';
+
+                }
+                $("#productsBody").html(html);
+                $('#products').DataTable();
+              },
+              error: function (error) {
+                $("#productsBody").html('<tr><td style="text-align: center" colspan="6">There has been an error.</td></tr>');
+                if (error.status == 403){
+                  window.location="login.html";
+                }else{
+                  toastr.error(error.responseJSON.msg);
+                }
+              }
+          });
+        }
+function objectifyForm(form) {
+  var fields = {};
+
+  form.find('input, textarea, select').each(function () {
+      fields[this.name] = $(this).val();
+  });
+
+  return fields;
+}
+
+</script>

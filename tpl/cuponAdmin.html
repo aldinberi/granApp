@@ -1,0 +1,280 @@
+<div class="card">
+    <div class="header">
+        <h4 class="title">Cupons table</h4>
+        <p class="category">Here are listed all the cupons that are in the system</p>
+    </div>
+      <div class="content table-responsive table-full-width">
+        <table id="cupons" class="table table-hover table-striped">
+            <thead>
+              <th>Product</th>
+              <th>Price</th>
+              <th>New price</th>
+              <th>Cupon code</th>
+              <th>Products user id</th>
+              <th>Edit cupon</th>
+              <th>Delete cupon</th>
+            </thead>
+            <tbody id="cuponProductBody">
+              <td style="text-align: center" colspan="7"><img style="width: 50px; height: auto" src="assets/img/loader.gif"></td>
+
+            </tbody>
+        </table>
+
+      </div>
+</div>
+
+
+<!-- Adding/Editing Modal -->
+<div class="modal fade" id="cuponModal" tabindex="-1" role="dialog" aria-labelledby="productModalLable" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="cuponModalLable" >Edit Cupon</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+<form id="add-cupon-form">
+<div class="modal-body">
+
+  <div class="form-group">
+    <input id="id" name="id" type="hidden">
+    <input id="user_id" name="user_id" type="hidden">
+  </div>
+
+
+  <div class="form-group">
+    <label>Product</label>
+    <select id = "product_list" name="product_id" class="form-control">
+
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Cupon code</label>
+    <input id="cupon_code" name="cupon_code" type="text" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label>New price</label>
+    <input id="new_price" name="new_price" type="text" class="form-control">
+  </div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <button id ="modalButton" type="submit" class="btn btn-primary">Add cupon</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+
+
+<script type="text/javascript">
+var user = parseJwt(localStorage.getItem('userToken'))
+
+$(document).ready(function(){
+$("#add-cupon-form").validate({
+    rules: {
+      cupon_code: {
+        required : true,
+        minlength: 3,
+        maxlength: 8
+      },
+
+      new_price: {
+        required : true,
+        min: 0.1
+      }
+    },
+
+    messages: {
+      cupon_code: {
+        minlength: "The cupon must be at least 3 characters long",
+        maxlength: "The cupon must be less than 8 characters long"
+      },
+
+      new_price: {
+        min: "The price can not be 0 or less",
+      }
+    },
+
+    submitHandler: function(form){
+      var id = $('#add-cupon-form input[name="id"]').val();
+      updateCupon(id);
+
+    }
+});
+
+});
+
+getCupons();
+
+function edit_cupon(id, user_id){
+  $.ajax({
+          url: 'granApp.api/vendorCupons/' + user_id + '/' + id,
+          type: 'GET',
+          dataType: 'json',
+          headers: {
+              'Bearer-Jwt': localStorage.getItem('userToken')
+          },
+          contentType: 'application/json; charset=utf-8',
+          success: function (data) {
+
+
+            var objData = data;
+            var html = '';
+            for(var i = 0; i < objData.length; i++){
+              $('#id').val(id);
+              $('#user_id').val(user_id);
+              $('#cupon_code').val(objData[i].cupon_code);
+              $('#new_price').val(objData[i].new_price);
+              html +='<option value=' + objData[i].id + '>' + objData[i].name + '</option>'
+            }
+              $('#modalButton').html('Update');
+              $('#cuponModalLable').html('Edit cupon');
+              $("#product_list").html(html);
+              $('#cuponModal').modal('toggle');
+          },
+          error: function (error) {
+            if (error.status == 403){
+              window.location="login.html";
+            }else{
+              toastr.error(error.responseJSON.msg);
+          }
+      }
+});
+}
+
+function updateCupon(id){
+$.ajax({
+  url: 'granApp.api/vendorCupons/' + id,
+  type: 'PUT',
+  headers: {
+      'Bearer-Jwt': localStorage.getItem('userToken')
+  },
+  contentType: 'application/json; charset=utf-8',
+  data: JSON.stringify(objectifyForm($('#add-cupon-form'))),
+  success: function (jqXHR) {
+        toastr.success('Successfully updated cupon');
+        $('#cuponModal').modal('toggle');
+        getCupons();
+      },
+      error: function (error) {
+        if (error.status == 403){
+          window.location="login.html";
+        }else{
+          toastr.error(error.responseJSON.msg);
+        }
+      }
+});
+
+}
+
+
+function deleteCupon(id){
+if(confirm('Do you want to delete this cupon?')){
+$.ajax({
+  method: "DELETE",
+  url: 'granApp.api/cupon/' + id,
+  headers: {
+      'Bearer-Jwt': localStorage.getItem('userToken')
+  },
+  success: function() {
+      getCupons();
+      toastr.success('Successfully deleted cupon');
+
+  },
+  error: function (error) {
+    if (error.status == 403){
+      window.location="login.html";
+    }else{
+      toastr.error(error.responseJSON.msg);
+    }
+  }
+});
+
+  }
+}
+
+
+
+
+function addProductsToList(){
+$.ajax({
+        url: 'granApp.api/products/',
+        type: 'GET',
+        dataType: 'json',
+        headers: {
+            'Bearer-Jwt': localStorage.getItem('userToken')
+        },
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+          var objData = data;
+          var html = '';
+          for(var i = 0; i < objData.length; i++){
+          html +='<option value=' + objData[i].id + '>' + objData[i].name + '</option>'
+          }
+
+          $("#product_list").html(html);
+
+        },
+        error: function (error) {
+          if (error.status == 403){
+            window.location="login.html";
+          }else{
+            toastr.error(error.responseJSON.msg);
+          }
+        }
+    });
+}
+
+function getCupons(){
+$.ajax({
+        url: 'granApp.api/cupons/',
+        type: 'GET',
+        dataType: 'json',
+        headers: {
+            'Bearer-Jwt': localStorage.getItem('userToken')
+        },
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+          var objData = data;
+          var html = '';
+          for(var i = 0; i < objData.length; i++){
+            html += '<tr><td>' + objData[i].name + '</td>';
+            html += '<td>' + objData[i].price + '</td>';
+            html += '<td>' + objData[i].new_price + '</td>';
+            html += '<td>' + objData[i].cupon_code + '</td>';
+            html += '<td>' + objData[i].user_id + '</td>';
+            html += '<td><button type="button" class="btn btn-info btn-fill" onclick="edit_cupon(' + objData[i].id + ',' + objData[i].user_id + ')">Edit</button></td>';
+            html += '<td><button type="button" class="btn btn-primary" onclick="deleteCupon(' + objData[i].id + ')">Delete</button></td></tr>';
+
+          }
+          $("#cuponProductBody").html(html);
+          $('#cupons').DataTable();
+        },
+        error: function (error) {
+          if (error.status == 403){
+            window.location="login.html";
+          }else{
+            toastr.error(error.responseJSON.msg);
+          }
+        }
+    });
+}
+
+function objectifyForm(form) {
+var fields = {};
+
+form.find('input, textarea, select').each(function () {
+    fields[this.name] = $(this).val();
+});
+
+return fields;
+}
+
+
+
+</script>
