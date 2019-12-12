@@ -164,7 +164,7 @@
 
         public function insert_product($request, $user_id){
             $database = new Database();
-            $intert_data = $request->data->getData();
+            $intert_data = $request;
             $product['name']= $intert_data['name'];
             $product['grammage']= $intert_data['grammage'];
             $product['unit']= $intert_data['unit'];
@@ -196,7 +196,7 @@
         
         public function update_product($request, $user_id, $product_id){
             $database = new Database();
-            $intert_data = $request->data->getData();
+            $intert_data = $request;
             $product['name']= $intert_data['name'];
             $product['grammage']= $intert_data['grammage'];
             $product['date_added']= $intert_data['date_added'];
@@ -225,7 +225,7 @@
 
         public function insert_cupon($request, $user_id){
             $database = new Database();
-            $intert_data = $request->data->getData();
+            $intert_data = $request;
             $cupon['user_id'] = $user_id;
             $cupon['product_id'] = $intert_data['product_id'];
             $cupon['cupon_code'] = $intert_data['cupon_code'];
@@ -251,7 +251,7 @@
 
         public function insert_vendor($request){
             $database = new Database();
-            $intert_data = $request->data->getData();
+            $intert_data = $request;
             $user['name'] = $intert_data['name'];
             $user['lastname'] = $intert_data['lastname'];
             $user['address'] = $intert_data['address'];
@@ -284,7 +284,7 @@
 
         public function update_vendor($request, $user_id){
             $database = new Database();        
-            $intert_data = $request->data->getData();
+            $intert_data = $request;
             $user_table['name']=$intert_data['name'];
             $user_table['lastname']=$intert_data['lastname'];
             $user_table['address']=$intert_data['address'];
@@ -313,7 +313,7 @@
 
         public function update_customer($request, $user_id, $user){
             $database = new Database();
-            $intert_data = $request->data->getData();
+            $intert_data = $request;
             $user_table['name']=$intert_data['name'];
             $user_table['lastname']=$intert_data['lastname'];
             $user_table['address']=$intert_data['address'];
@@ -335,7 +335,7 @@
         public function update_cupon($request, $cupon_id, $user){
             $database = new Database();
         
-            $intert_data = $request->data->getData();
+            $intert_data = $request;
             $cupon['cupon_id'] = $cupon_id;
             $cupon['cupon_code'] = $intert_data['cupon_code'];
             $cupon['new_price'] = $intert_data['new_price'];
@@ -355,7 +355,7 @@
         public function update_password($request, $user_id, $user){
             $database = new Database();
             
-            $intert_data = $request->data->getData();
+            $intert_data = $request;
             $password['user_id'] = $user_id;
             $password['new_password'] = password_hash($intert_data['new_password'], PASSWORD_DEFAULT);
             $q = "UPDATE user
@@ -373,7 +373,7 @@
 
         public function insert_customer($request){
             $database = new Database();
-            $intert_data = $request->data->getData();
+            $intert_data = $request;
             $user['name'] = $intert_data['name'];
             $user['lastname'] = $intert_data['lastname'];
             $user['address'] = $intert_data['address'];

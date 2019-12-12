@@ -129,35 +129,35 @@ Flight::route('GET /vendorCupons/@userId', function($userId){
 Flight::route('POST /product/@user_Id', function($user_id){
     $pm = new PersistanceManager();
     $request = Flight::request();
-    $pm->insert_product($request, $user_id);
+    $pm->insert_product($request->data->getData(), $user_id);
     Flight::halt(200);
 });
 
 Flight::route('PUT /product/@user_id/@product_id', function($user_id, $product_id){
     $pm = new PersistanceManager();
     $request = Flight::request();
-    $pm->update_product($request, $user_id, $product_id);
+    $pm->update_product($request->data->getData(), $user_id, $product_id);
     Flight::halt(200);
 });
 
 Flight::route('POST /cupon/@user_id', function($user_id){
     $pm = new PersistanceManager();
     $request = Flight::request();
-    $pm->insert_cupon($request, $user_id);
+    $pm->insert_cupon($request->data->getData(), $user_id);
     Flight::halt(200);
 });
 
 Flight::route('POST /register/vendors', function(){
     $pm = new PersistanceManager();
     $request = Flight::request();
-    $pm->insert_vendor($request);
+    $pm->insert_vendor($request->data->getData());
     Flight::halt(200);
 });
 
 Flight::route('PUT /vendors/@user_id', function($user_id){
     $pm = new PersistanceManager();
     $request = Flight::request();
-    $pm->update_vendor($request, $user_id);
+    $pm->update_vendor($request->data->getData(), $user_id);
     Flight::halt(200);
 });
 
@@ -165,7 +165,7 @@ Flight::route('PUT /user/@user_id', function($user_id){
     $pm = new PersistanceManager();
     $request = Flight::request();
     $user = Flight::get('user')['user_id'];
-    $pm->update_customer($request, $user_id, $user);
+    $pm->update_customer($request->data->getData(), $user_id, $user);
     Flight::halt(200);
 });
 
@@ -173,7 +173,7 @@ Flight::route('PUT /vendorCupons/@cupon_id', function($cupon_id){
     $pm = new PersistanceManager();
     $request = Flight::request();
     $user = Flight::get('user')['user_id'];
-    $pm->update_cupon($request, $cupon_id, $user);
+    $pm->update_cupon($request->data->getData(), $cupon_id, $user);
     Flight::halt(200);
 });
 
@@ -181,14 +181,14 @@ Flight::route('PUT /password/@user_id', function($user_id){
     $pm = new PersistanceManager();
     $request = Flight::request();
     $user = Flight::get('user')['user_id'];
-    $pm->update_password($request, $user_id, $user);
+    $pm->update_password($request->data->getData(), $user_id, $user);
     Flight::halt(200);
 });
 
 Flight::route('POST /register/customers', function(){
     $pm = new PersistanceManager();
     $request = Flight::request();
-    $pm->insert_customer($request);
+    $pm->insert_customer($request->data->getData());
     Flight::halt(200);
 });
 
