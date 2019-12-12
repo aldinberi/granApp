@@ -145,14 +145,15 @@
       contentType: 'application/json; charset=utf-8',
       data: JSON.stringify(objectifyForm($("#login-form"))),
       'error': function(error){
-        var msg = JSON.parse(error.responseText);
-        toastr.error(msg.message);
+        var msg = JSON.parse(error);
+        toastr.error(msg);
         console.log(error);
       },
       'success' : function(data){
         localStorage.setItem("userToken", data.token);
-        window.location = "index.html";
         console.log(data);
+        window.location = "index.html";
+        
       }
     });
   }
