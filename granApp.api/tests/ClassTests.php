@@ -6,7 +6,7 @@ require 'PersistanceManager.php';
 
 use PHPUnit\Framework\TestCase;
 
-final class EmailTest extends TestCase
+final class ClassTests extends TestCase
 {
 
     public function testPersistanceManagetCreated(): void
