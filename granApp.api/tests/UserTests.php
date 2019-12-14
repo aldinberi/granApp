@@ -18,6 +18,26 @@ final class UserTests extends TestCase
 
     }
 
+    public function testUserValidation(){
+        $login_data = [
+            "username"=>"aldin_berisa15@outlook.com",
+            "password"=>"campo"
+        ];
+
+        $response = $this->pm->validate_user($login_data);
+
+        $user = [
+            "user_id" => 30,
+            "name" => "Aldin",
+            "lastname" => "Beriša",
+            "email" => "aldin_berisa15@outlook.com",
+            "user_type_id" => 1
+        ];
+
+        $this->assertEquals($response, $user);
+
+    }
+
     public function testBasicCustomerInfo(){
         $customers = $this->pm->get_customers();
         $this->assertNotEmpty($customers);
@@ -186,19 +206,19 @@ final class UserTests extends TestCase
         }
     }
 
-    public function testDeleteUser(){
-        try{            
-            $this->pm->delete_user(37);
-            $this->assertTrue(true);
-            $vendor = $this->pm->get_vendor(37);
-            if(!$vendor){
-                $this->fail();
-            }
+    // public function testDeleteUser(){
+    //     try{            
+    //         $this->pm->delete_user(37);
+    //         $this->assertTrue(true);
+    //         $vendor = $this->pm->get_vendor(37);
+    //         if(!$vendor){
+    //             $this->fail();
+    //         }
 
-        }catch(Exception $e){
-            $this->fail();
-        }
-    }
+    //     }catch(Exception $e){
+    //         $this->fail();
+    //     }
+    // }
 
  }
 

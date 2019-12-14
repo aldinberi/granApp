@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require 'PersistanceManager.php';
 
+require 'lib/database.php';
+
 use PHPUnit\Framework\TestCase;
 
 final class ClassTests extends TestCase
@@ -15,13 +17,12 @@ final class ClassTests extends TestCase
       $this->assertInstanceOf(PersistanceManager::class, $pm);
     }
 
-// public function testCanBeUsedAsString(): void
-//      {
-//         $this->assertEquals(
-//             'user@example.com',
-//             Email::fromString('user@example.com')
-//         );
-//     }
+    public function testDataBaseCreated(){
+      $db = new Database();
+      $this->assertInstanceOf(Database::class, $db);
+    }
+
+    
  }
 
 ?>

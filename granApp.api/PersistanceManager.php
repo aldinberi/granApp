@@ -1,6 +1,29 @@
 <?php
-
     class PersistanceManager {
+
+        public function validate_user($request){
+            $login_data = $request;
+            $database = new Database();
+            $sth = $database->handler->prepare("SELECT password FROM user WHERE :email = email");
+            $sth->execute(['email' => $login_data['username']]);
+            $password= $sth->fetchColumn();
+            if(password_verify($login_data['password'], $password)){
+                $vendors = "SELECT s.user_id, s.name, s.lastname, s.email, s.user_type_id
+                            FROM user as s
+                            WHERE s.email = :email";
+                $statment = $database->handler->prepare($vendors);
+                $statment->execute(['email' => $login_data['username']]);
+                $vendors = $statment->fetchAll();
+                if(count($vendors) == 1){
+                    return $vendors[0];
+                }else{
+                    return ['message'=>'No user'];
+                }
+            }else{
+              return ['message'=>'No user'];
+            }
+
+        }
         
         public function get_all_products(){
             $database = new Database();
@@ -448,6 +471,4 @@
             $statment->execute(['record_id' => $record_id]);
         }
     }
-
-
 ?>

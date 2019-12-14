@@ -40,26 +40,13 @@ Flight::before('start', function(&$params, &$output){
 
 Flight::route('POST /login', function(){
   $login_data = Flight::request()->data->getData();
-  $database = new Database();
-  $sth = $database->handler->prepare("SELECT password FROM user WHERE :email = email");
-  $sth->execute(['email' => $login_data['username']]);
-  $password= $sth->fetchColumn();
-  if(password_verify($login_data['password'], $password)){
-  $vendors = "SELECT s.user_id, s.name, s.lastname, s.email, s.user_type_id
-              FROM user as s
-              WHERE s.email = :email";
-  $statment = $database->handler->prepare($vendors);
-  $statment->execute(['email' => $login_data['username']]);
-  $vendors = $statment->fetchAll();
-  if(count($vendors) == 1){
-    $user =$vendors[0];
-    $jwt = JWT::encode($user, Flight::get('JWT_SECRET'));
-    Flight::json(["token" => $jwt]);
+  $pm = new PersistanceManager();
+  $response = $pm->validate_user($login_data);
+  if(array_key_exists('message', $response)){
+    Flight::halt(404, json_encode(['message'=>'No user']));
   }else{
-    Flight::halt(404, json_encode(['message'=>'No user']));
-  }
-}else{
-    Flight::halt(404, json_encode(['message'=>'No user']));
+    $jwt = JWT::encode($response, Flight::get('JWT_SECRET'));
+    Flight::json(["token" => $jwt]); 
   }
 });
 
