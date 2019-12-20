@@ -200,6 +200,7 @@ final class UserTests extends TestCase
             
             $this->pm->update_vendor($example_vendor, 33);
             $this->assertTrue(true);
+            
 
         }catch(Exception $e){
             $this->fail();
