@@ -82,24 +82,24 @@ final class UserTests extends TestCase
         $this->assertEquals($example_customer, $customer[0]);
     }
 
-    // public function testInsertCustomer(){
-    //     try{
-    //         $example_customer = [
-    //             "name" => "Amer",
-    //             "lastname" => "Resa",
-    //             "address" => "Sibenik bb",
-    //             "email" => "amerresa@gmail.com",
-    //             "password" => "saba",
-    //         ];
+    public function testInsertCustomer(){
+        try{
+            $example_customer = [
+                "name" => "Amer",
+                "lastname" => "Resa",
+                "address" => "Sibenik bb",
+                "email" => "amerresa@gmail.com",
+                "password" => "saba",
+            ];
             
-    //         $this->pm->insert_customer($example_customer);
-    //         $this->assertTrue(true);
+            $this->pm->insert_customer($example_customer);
+            $this->assertTrue(true);
 
-    //     }catch(Exception $e){
-    //         $this->fail();
-    //     }
+        }catch(Exception $e){
+            $this->fail();
+        }
 
-    // }
+    }
 
     public function testUpdateCustomer(){
         try{
@@ -167,25 +167,25 @@ final class UserTests extends TestCase
         $this->assertEquals($example_vendor, $vendor[0]);
     }
 
-    // public function testInsertVendor(){
-    //     try{
-    //         $example_vendor = [
-    //             "name" => "Hankoi",
-    //             "lastname" => "Paldum",
-    //             "address" => "Mese Selimovica bb",
-    //             "email" => "hanka@paldum.com",
-    //             "password" => "hanka",
-    //             "company" => "Hanka Inc",
-    //         ];
+    public function testInsertVendor(){
+        try{
+            $example_vendor = [
+                "name" => "Hankoi",
+                "lastname" => "Paldum",
+                "address" => "Mese Selimovica bb",
+                "email" => "hanka@paldum.com",
+                "password" => "hanka",
+                "company" => "Hanka Inc",
+            ];
             
-    //         $this->pm->insert_vendor($example_vendor);
-    //         $this->assertTrue(true);
+            $this->pm->insert_vendor($example_vendor);
+            $this->assertTrue(true);
 
-    //     }catch(Exception $e){
-    //         $this->fail();
-    //     }
+        }catch(Exception $e){
+            $this->fail();
+        }
 
-    // }
+    }
 
     public function testUpdateVendor(){
         try{
