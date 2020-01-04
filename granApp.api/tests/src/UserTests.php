@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-require 'lib/database.php';
-
-require 'PersistanceManager.php';
+require_once 'lib/PersistanceManager.php';
 
 use PHPUnit\Framework\TestCase;
 
@@ -111,7 +109,7 @@ final class UserTests extends TestCase
                 "password" => "saba",
             ];
             
-            $this->pm->update_customer($example_customer, 35, 1);
+            $this->pm->update_customer($example_customer, 26, 1);
             $this->assertTrue(true);
 
         }catch(Exception $e){
@@ -198,7 +196,7 @@ final class UserTests extends TestCase
                 "company" => "Hanka Inc",
             ];
             
-            $this->pm->update_vendor($example_vendor, 33);
+            $this->pm->update_vendor($example_vendor, 29);
             $this->assertTrue(true);
             
 
@@ -207,19 +205,18 @@ final class UserTests extends TestCase
         }
     }
 
-    // public function testDeleteUser(){
-    //     try{            
-    //         $this->pm->delete_user(37);
-    //         $this->assertTrue(true);
-    //         $vendor = $this->pm->get_vendor(37);
-    //         if(!$vendor){
-    //             $this->fail();
-    //         }
-
-    //     }catch(Exception $e){
-    //         $this->fail();
-    //     }
-    // }
+    public function testDeleteUser(){
+        try{            
+            $this->pm->delete_user(16);
+            $this->assertTrue(true);
+            $vendor = $this->pm->get_vendor(37);
+            if(!$vendor){
+                $this->fail();
+            }
+        }catch(Exception $e){
+            $this->fail();
+        }
+    }
 
  }
 

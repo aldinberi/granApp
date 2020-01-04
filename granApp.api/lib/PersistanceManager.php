@@ -1,4 +1,7 @@
 <?php
+
+require_once 'lib/database.php';
+
     class PersistanceManager {
 
         public function validate_user($request){

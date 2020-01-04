@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 14, 2019 at 10:36 AM
--- Server version: 5.7.24
--- PHP Version: 7.2.14
+-- Generation Time: Jan 03, 2020 at 11:34 AM
+-- Server version: 5.7.26
+-- PHP Version: 7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`customer_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `customer`
@@ -91,7 +91,8 @@ CREATE TABLE IF NOT EXISTS `customer` (
 INSERT INTO `customer` (`customer_id`, `user_id`) VALUES
 (1, 15),
 (2, 16),
-(3, 29);
+(3, 29),
+(4, 30);
 
 -- --------------------------------------------------------
 
@@ -194,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `record` (
   `record_id` int(11) NOT NULL AUTO_INCREMENT,
   `record_string` varchar(255) NOT NULL,
   PRIMARY KEY (`record_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `record`
@@ -263,7 +264,8 @@ INSERT INTO `record` (`record_id`, `record_string`) VALUES
 (62, ' Vendor with user id 1 has deleted cupon with id 13'),
 (63, ' Vendor with user id 1 has deleted cupon with id 20'),
 (65, ' Vendor with user id 28 has deleted product with id 11'),
-(66, ' Vendor with user id 28 has deleted cupon with id 12');
+(66, ' Vendor with user id 28 has deleted cupon with id 12'),
+(67, 'Customer with user id 30 has been created');
 
 -- --------------------------------------------------------
 
@@ -281,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(255) DEFAULT NULL,
   `user_type_id` int(11) NOT NULL COMMENT '1 - admin, 2-user, 3 - vendor',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
@@ -294,7 +296,8 @@ INSERT INTO `user` (`user_id`, `name`, `lastname`, `address`, `email`, `password
 (16, 'Emela', 'Karovic', 'Pazaric 27', 'e_karovci@gmail.com', 'dada', 2),
 (26, 'Beri', 'Mouse', 'Hadzici', 'info@kventum.ba', '$2y$10$hnJDx3.3Fb57oU5z/DtfGu66h.LEk6Fk8h1LbWhWacoaOcSd1w5RC', 3),
 (28, 'campo', 'berisa', 'grivici', 'campo@thedog.com', '$2y$10$hnJDx3.3Fb57oU5z/DtfGu66h.LEk6Fk8h1LbWhWacoaOcSd1w5RC', 3),
-(29, 'Amir', 'HadÅ¾iÄ‡', 'Sarajevo', 'amir@hadzic.com', '$2y$10$sE78QcG6Dclu3tDQPGxeSOvjt3.QzJqGOP/Y4WBIpc0eDd6tMKARa', 2);
+(29, 'Amir', 'HadÅ¾iÄ‡', 'Sarajevo', 'amir@hadzic.com', '$2y$10$sE78QcG6Dclu3tDQPGxeSOvjt3.QzJqGOP/Y4WBIpc0eDd6tMKARa', 2),
+(30, 'Aldin', 'BeriÅ¡a', 'Hadzici', 'aldin_berisa15@outlook.com', '$2y$10$Q/o2lnR5rhHWzWWUu8nnau9OoED6vOQoNFm5SgYiBTILg9vtYiuYa', 1);
 
 -- --------------------------------------------------------
 

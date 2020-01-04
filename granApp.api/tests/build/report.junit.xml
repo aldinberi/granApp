@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="sample-test-suite" tests="33" assertions="467" errors="0" failures="0" skipped="0" time="2.423805">
+    <testsuite name="ClassTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ClassTests.php" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.035155">
+      <testcase name="testPersistanceManagetCreated" class="ClassTests" classname="ClassTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ClassTests.php" line="14" assertions="1" time="0.023451"/>
+      <testcase name="testDataBaseCreated" class="ClassTests" classname="ClassTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ClassTests.php" line="20" assertions="1" time="0.011704"/>
+    </testsuite>
+    <testsuite name="CuponTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\CuponTests.php" tests="7" assertions="63" errors="0" failures="0" skipped="0" time="0.858787">
+      <testcase name="testBasicCuponInfo" class="CuponTests" classname="CuponTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\CuponTests.php" line="19" assertions="57" time="0.125671"/>
+      <testcase name="testIfReturnsRealCupons" class="CuponTests" classname="CuponTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\CuponTests.php" line="41" assertions="1" time="0.626925"/>
+      <testcase name="testIfReturnsRightCupon" class="CuponTests" classname="CuponTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\CuponTests.php" line="55" assertions="1" time="0.017777"/>
+      <testcase name="testIfReturnsCuponsByUser" class="CuponTests" classname="CuponTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\CuponTests.php" line="69" assertions="1" time="0.019557"/>
+      <testcase name="testInsertCupon" class="CuponTests" classname="CuponTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\CuponTests.php" line="83" assertions="1" time="0.025824"/>
+      <testcase name="testUpdateCupon" class="CuponTests" classname="CuponTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\CuponTests.php" line="99" assertions="1" time="0.021950"/>
+      <testcase name="testDeleteCupon" class="CuponTests" classname="CuponTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\CuponTests.php" line="113" assertions="1" time="0.021083"/>
+    </testsuite>
+    <testsuite name="ProductTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ProductTests.php" tests="10" assertions="324" errors="0" failures="0" skipped="0" time="0.958360">
+      <testcase name="testBasicProductInfo" class="ProductTests" classname="ProductTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ProductTests.php" line="19" assertions="130" time="0.251933"/>
+      <testcase name="testIfReturnsRealProducts" class="ProductTests" classname="ProductTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ProductTests.php" line="39" assertions="1" time="0.060751"/>
+      <testcase name="testBasicCheapestProductsInfo" class="ProductTests" classname="ProductTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ProductTests.php" line="53" assertions="99" time="0.194268"/>
+      <testcase name="testIfReturnsRealCheapestProducts" class="ProductTests" classname="ProductTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ProductTests.php" line="71" assertions="1" time="0.068045"/>
+      <testcase name="testBasicProductsFromVendorInfo" class="ProductTests" classname="ProductTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ProductTests.php" line="84" assertions="88" time="0.172518"/>
+      <testcase name="testIfReturnsRealVendorProducts" class="ProductTests" classname="ProductTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ProductTests.php" line="103" assertions="1" time="0.065558"/>
+      <testcase name="testIfReturnsRightVendorProduct" class="ProductTests" classname="ProductTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ProductTests.php" line="116" assertions="1" time="0.051425"/>
+      <testcase name="testInsertProduct" class="ProductTests" classname="ProductTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ProductTests.php" line="129" assertions="1" time="0.032310"/>
+      <testcase name="testUpdateProduct" class="ProductTests" classname="ProductTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ProductTests.php" line="146" assertions="1" time="0.028215"/>
+      <testcase name="testDeleteProduct" class="ProductTests" classname="ProductTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\ProductTests.php" line="163" assertions="1" time="0.033337"/>
+    </testsuite>
+    <testsuite name="RecordTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\RecordTests.php" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.042546">
+      <testcase name="testBasicRecordInfo" class="RecordTests" classname="RecordTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\RecordTests.php" line="19" assertions="1" time="0.030266"/>
+      <testcase name="testDeleteRecord" class="RecordTests" classname="RecordTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\RecordTests.php" line="28" assertions="1" time="0.012280"/>
+    </testsuite>
+    <testsuite name="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" tests="12" assertions="76" errors="0" failures="0" skipped="0" time="0.528957">
+      <testcase name="testUserValidation" class="UserTests" classname="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" line="19" assertions="1" time="0.075061"/>
+      <testcase name="testBasicCustomerInfo" class="UserTests" classname="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" line="39" assertions="41" time="0.088473"/>
+      <testcase name="testIfReturnsRealCustomers" class="UserTests" classname="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" line="58" assertions="1" time="0.014560"/>
+      <testcase name="testIfReturnsRigtCustomer" class="UserTests" classname="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" line="70" assertions="1" time="0.013285"/>
+      <testcase name="testInsertCustomer" class="UserTests" classname="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" line="83" assertions="1" time="0.075795"/>
+      <testcase name="testUpdateCustomer" class="UserTests" classname="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" line="102" assertions="1" time="0.019655"/>
+      <testcase name="testBasicVendorInfo" class="UserTests" classname="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" line="121" assertions="25" time="0.059536"/>
+      <testcase name="testIfReturnsRealVendors" class="UserTests" classname="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" line="142" assertions="1" time="0.013190"/>
+      <testcase name="testIfReturnsRigtVendor" class="UserTests" classname="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" line="155" assertions="1" time="0.051763"/>
+      <testcase name="testInsertVendor" class="UserTests" classname="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" line="168" assertions="1" time="0.074795"/>
+      <testcase name="testUpdateVendor" class="UserTests" classname="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" line="188" assertions="1" time="0.028028"/>
+      <testcase name="testDeleteUser" class="UserTests" classname="UserTests" file="C:\wamp64\www\granApp\granApp.api\tests\src\UserTests.php" line="208" assertions="1" time="0.014816"/>
+    </testsuite>
+  </testsuite>
+</testsuites>

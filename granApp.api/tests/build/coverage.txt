@@ -1,0 +1,14 @@
+
+
+Code Coverage Report:      
+  2020-01-03 11:02:57      
+                           
+ Summary:                  
+  Classes: 50.00% (1/2)    
+  Methods: 92.59% (25/27)  
+  Lines:   95.33% (286/300)
+
+Database
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  9/  9)
+PersistanceManager
+  Methods:  92.31% (24/26)   Lines:  95.19% (277/291)

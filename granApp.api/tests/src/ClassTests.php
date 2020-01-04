@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-require 'PersistanceManager.php';
+require_once 'lib/PersistanceManager.php';
 
-require 'lib/database.php';
+require_once 'lib/database.php';
 
 use PHPUnit\Framework\TestCase;
 

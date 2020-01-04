@@ -4,7 +4,7 @@ $config = include('config.php');
 
 require 'lib/database.php';
 
-require 'PersistanceManager.php';
+require 'lib/PersistanceManager.php';
 
 require 'vendor/autoload.php';
 

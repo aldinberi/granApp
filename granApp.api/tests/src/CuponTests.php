@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-require 'lib/database.php';
+require_once 'lib/database.php';
 
-require 'PersistanceManager.php';
+require_once 'lib/PersistanceManager.php';
 
 use PHPUnit\Framework\TestCase;
 
@@ -80,21 +80,21 @@ final class CuponTests extends TestCase {
         $this->assertEquals($example_cupon, $cupons[0]);
     }
 
-    // public function testInsertCupon(){
-    //     try {
-    //         $example_cupon = [
-    //             "product_id" => 13,
-    //             "cupon_code" => "jag",
-    //             "new_price" => 1
-    //         ];
+     public function testInsertCupon(){
+         try {
+             $example_cupon = [
+                 "product_id" => 13,
+                 "cupon_code" => "jag",
+                 "new_price" => 1
+             ];
 
-    //         $this->pm->insert_cupon($example_cupon, 28);
-    //         $this->assertTrue(true);
+             $this->pm->insert_cupon($example_cupon, 28);
+             $this->assertTrue(true);
 
-    //     } catch (Exception $e){
-    //         $this->fail();
-    //     }
-    // }
+         } catch (Exception $e){
+             $this->fail();
+         }
+     }
 
     public function testUpdateCupon(){
         try{
@@ -103,7 +103,7 @@ final class CuponTests extends TestCase {
                 "new_price" => 5
             ];
 
-            $this->pm->update_cupon($example_cupon, 16, 28);
+            $this->pm->update_cupon($example_cupon, 11, 28);
             $this->assertTrue(true);
         } catch (Exception $e){
             $this->fail();
@@ -112,11 +112,9 @@ final class CuponTests extends TestCase {
 
     public function testDeleteCupon(){
         try{
-            $this->pm->delete_cupon(16, 28);
+            $this->pm->delete_cupon(6, 28);
             $this->assertTrue(true);
-
             $cupon = $this->pm->get_vendor_cupon(28, 19);
-
             if (!$cupon) {
                 $this->fail();
             }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-require 'lib/database.php';
+require_once 'lib/database.php';
 
-require 'PersistanceManager.php';
+require_once 'lib/PersistanceManager.php';
 
 use PHPUnit\Framework\TestCase;
 
@@ -126,43 +126,43 @@ final class ProductTests extends TestCase {
         $this->assertEquals($example_product, $vendor_product[0]);
     }
 
-    // public function testInsertProduct(){
-    //     try {
-    //         $product = [
-    //             "name" => "Krem juha od gljiva",
-    //             "grammage" => 150,
-    //             "unit" => "g",
-    //             "date_added" => "2019-12-31",
-    //             "price" => 1.50 
-    //         ];
-    //         $this->pm->insert_product($product, 28);
-    //         $this->assertTrue(true);
+     public function testInsertProduct(){
+         try {
+             $product = [
+                 "name" => "Krem juha od gljiva",
+                 "grammage" => 150,
+                 "unit" => "g",
+                 "date_added" => "2019-12-31",
+                 "price" => 1.50
+             ];
+             $this->pm->insert_product($product, 28);
+             $this->assertTrue(true);
 
-    //     } catch (Exception $e) {
-    //         $this->fail();
-    //     }
-    // }
+         } catch (Exception $e) {
+             $this->fail();
+         }
+     }
 
-    // public function testUpdateProduct(){
-    //     try {
-    //         $product = [
-    //             "name" => "Krem juha od gljiva",
-    //             "grammage" => 150,
-    //             "unit" => "g",
-    //             "date_added" => "2019-12-31",
-    //             "price" => 2 
-    //         ];
+     public function testUpdateProduct(){
+         try {
+             $product = [
+                 "name" => "Krem juha od gljiva",
+                 "grammage" => 150,
+                 "unit" => "g",
+                 "date_added" => "2019-12-31",
+                 "price" => 2
+             ];
 
-    //         $this->pm->update_product($product, 28, 33);
-    //         $this->assertTrue(true);
-    //     } catch (Exception $e) {
-    //         $this->fail();
-    //     }
-    // }
+             $this->pm->update_product($product, 28, 29);
+             $this->assertTrue(true);
+         } catch (Exception $e) {
+             $this->fail();
+         }
+     }
 
     public function testDeleteProduct(){
         try {
-            $this->pm->delete_product(35, 28);
+            $this->pm->delete_product(27, 28);
             $this->assertTrue(true);
             $product = $this->pm->get_product_from_vendor(28, 33);
             if($product) {
